@@ -131,8 +131,8 @@ class ColoredWatchCanvasRenderer(
     private fun recalculateClockHands(bounds: Rect) {
         hourHandFill = createClockHand(
             bounds,
-            0.21028f,
-            0.02336f,
+            0.25028f,
+            0.02536f,
             (0.01869f + 0.03738f / 2.0f),
             1.5f,
             1.5f,
@@ -150,7 +150,7 @@ class ColoredWatchCanvasRenderer(
         secondHandFill = createClockHand(
             bounds,
             0.37383f,
-            0.00934f,
+            0.00534f,
             (0.01869f + 0.03738f / 2.0f),
             1.5f,
             1.5f,
