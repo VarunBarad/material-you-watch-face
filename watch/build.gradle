@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.materialwatch"
         minSdk 30
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -33,7 +33,16 @@ dependencies {
     implementation 'androidx.percentlayout:percentlayout:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+
     implementation 'androidx.wear:wear:1.2.0'
+    implementation 'androidx.wear.watchface:watchface:1.1.1'
+    implementation 'androidx.wear.watchface:watchface-client:1.1.1'
+    implementation 'androidx.wear.watchface:watchface-complications-rendering:1.1.1'
+    implementation 'androidx.wear.watchface:watchface-data:1.1.1'
+    implementation 'androidx.wear.watchface:watchface-editor:1.1.1'
+    implementation 'androidx.wear.watchface:watchface-style:1.1.1'
+
+    implementation 'com.google.android.material:material:1.6.1'
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
