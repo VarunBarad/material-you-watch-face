@@ -120,7 +120,7 @@ class ColoredWatchCanvasRenderer(
                 val secondsPerSecondHandRotation = Duration.ofMinutes(1).seconds
                 val secondsRotation = secondOfDay.rem(secondsPerSecondHandRotation) * 360.0f / secondsPerSecondHandRotation
 
-                clockHandPaint.color = (context as WatchApplication).colorMinute
+                clockHandPaint.color = (context as WatchApplication).colorSecond
                 withRotation(secondsRotation, bounds.exactCenterX(), bounds.exactCenterY()) {
                     drawPath(secondHandFill, clockHandPaint)
                 }

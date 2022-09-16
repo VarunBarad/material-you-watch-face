@@ -15,8 +15,6 @@ class ColorListenerService : WearableListenerService(), DataClient.OnDataChanged
         private const val KEY_COLOR_SECOND = "key_color_second"
     }
 
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
-
     override fun onDataChanged(dataEvents: DataEventBuffer) {
         super.onDataChanged(dataEvents)
 
@@ -53,10 +51,5 @@ class ColorListenerService : WearableListenerService(), DataClient.OnDataChanged
                 startActivity(intent)
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        scope.cancel()
     }
 }

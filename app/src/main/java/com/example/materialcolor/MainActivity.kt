@@ -1,5 +1,6 @@
 package com.example.materialcolor
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -70,19 +71,19 @@ class MainActivity : ComponentActivity() {
                 val request = PutDataMapRequest.create(PATH_COLORS).apply {
                     when (color) {
                         "cyan" -> {
-                            dataMap.putInt(KEY_COLOR_HOUR, 11)
-                            dataMap.putInt(KEY_COLOR_MINUTE, 12)
-                            dataMap.putInt(KEY_COLOR_SECOND, 13)
+                            dataMap.putInt(KEY_COLOR_HOUR, Color.CYAN)
+                            dataMap.putInt(KEY_COLOR_MINUTE, Color.LTGRAY)
+                            dataMap.putInt(KEY_COLOR_SECOND, Color.YELLOW)
                         }
                         "brown" -> {
-                            dataMap.putInt(KEY_COLOR_HOUR, 21)
-                            dataMap.putInt(KEY_COLOR_MINUTE, 22)
-                            dataMap.putInt(KEY_COLOR_SECOND, 23)
+                            dataMap.putInt(KEY_COLOR_HOUR, Color.LTGRAY)
+                            dataMap.putInt(KEY_COLOR_MINUTE, Color.YELLOW)
+                            dataMap.putInt(KEY_COLOR_SECOND, Color.CYAN)
                         }
                         "orange" -> {
-                            dataMap.putInt(KEY_COLOR_HOUR, 31)
-                            dataMap.putInt(KEY_COLOR_MINUTE, 32)
-                            dataMap.putInt(KEY_COLOR_SECOND, 33)
+                            dataMap.putInt(KEY_COLOR_HOUR, Color.YELLOW)
+                            dataMap.putInt(KEY_COLOR_MINUTE, Color.CYAN)
+                            dataMap.putInt(KEY_COLOR_SECOND, Color.LTGRAY)
                         }
                     }
                 }.asPutDataRequest().setUrgent()
