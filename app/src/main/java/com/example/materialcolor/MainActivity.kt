@@ -14,18 +14,23 @@ import androidx.lifecycle.lifecycleScope
 import com.example.materialcolor.ui.theme.MaterialColorTheme
 import com.google.android.gms.wearable.PutDataMapRequest
 import com.google.android.gms.wearable.Wearable
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 class MainActivity : ComponentActivity() {
     companion object {
-        private const val COLORS_PATH = "/colors"
+        private const val PATH_COLORS = "/colors"
+        private const val PATH_START_ACTIVITY = "/start-activity"
         private const val KEY_COLOR_HOUR = "key_color_hour"
         private const val KEY_COLOR_MINUTE = "key_color_minute"
         private const val KEY_COLOR_SECOND = "key_color_second"
     }
 
     private val dataClient by lazy { Wearable.getDataClient(this) }
+    private val messageClient by lazy { Wearable.getMessageClient(this) }
+    private val nodeClient by lazy { Wearable.getNodeClient(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +40,26 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HomeScreen(::sendColors)
+                    HomeScreen(::sendColors, ::startWatchActivity)
                 }
+            }
+        }
+    }
+
+    private fun startWatchActivity() {
+        lifecycleScope.launch {
+            try {
+                val nodes = nodeClient.connectedNodes.await()
+
+                nodes.map { node ->
+                    async {
+                        messageClient
+                            .sendMessage(node.id, PATH_START_ACTIVITY, byteArrayOf())
+                            .await()
+                    }
+                }.awaitAll()
+            } catch (e: Exception) {
+                Log.d("VarunVarunVarun", "Failed starting watch activity", e)
             }
         }
     }
@@ -44,7 +67,7 @@ class MainActivity : ComponentActivity() {
     private fun sendColors(color: String) {
         lifecycleScope.launch {
             try {
-                val request = PutDataMapRequest.create(COLORS_PATH).apply {
+                val request = PutDataMapRequest.create(PATH_COLORS).apply {
                     when (color) {
                         "cyan" -> {
                             dataMap.putInt(KEY_COLOR_HOUR, 11)
@@ -75,6 +98,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun HomeScreen(
     buttonClickListener: (String) -> Unit,
+    startActivityClickListener: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
         Button(onClick = { buttonClickListener("cyan") }) {
@@ -86,6 +110,9 @@ fun HomeScreen(
         Button(onClick = { buttonClickListener("orange") }) {
             Text("Orange")
         }
+        Button(onClick = startActivityClickListener) {
+            Text("Start watch activity")
+        }
     }
 }
 
@@ -93,6 +120,9 @@ fun HomeScreen(
 @Composable
 fun DefaultPreview() {
     MaterialColorTheme {
-        HomeScreen(buttonClickListener = {})
+        HomeScreen(
+            buttonClickListener = {},
+            startActivityClickListener = {},
+        )
     }
 }
